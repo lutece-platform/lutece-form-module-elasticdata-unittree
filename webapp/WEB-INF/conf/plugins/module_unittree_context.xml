@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" >
+
+    <bean id="elasticdatasearch-unittree.assignUnitTreeDAO" class="fr.paris.lutece.plugins.elasticdatasearch.modules.unittree.business.AssignUnitTreeDAO" />
+	
+	<bean id="elasticdatasearch-unittree.unitTreeExternalProvider" class="fr.paris.lutece.plugins.elasticdatasearch.modules.unittree.web.DataSourceUnitTreeAttributesProvider" />
+
+	<bean id="unittree.unitAssignmentDAO"
+        class="fr.paris.lutece.plugins.unittree.business.assignment.UnitAssignmentDAO" />
+	<!-- <bean id="elasticdatasearch-unittree.demandDataSourceUnitTree" class="fr.paris.lutece.plugins.elasticdatasearch.modules.unittree.business.FormDataSourceUnitTree" > -->
+	<bean id="elasticdata-forms.formsDataSourceUnitTree" class="fr.paris.lutece.plugins.elasticdatasearch.modules.unittree.business.FormDataSourceUnitTree">
+    <property name="id" value="FormsDataSourceUnitTree" />
+    <property name="name" value="Base de réponse(s) de formulaire(s) avec UnitTree." />
+    <property name="targetIndexName" value="formsdatasource" />
+    <property name="mappings">
+      <value><![CDATA[
+                      {
+                      "mappings": {
+                            "properties": {
+                              "timestamp": {
+                                "type":   "date",
+                                "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+                              }
+                            }
+                          }
+                      }
+                      ]]>
+      </value>
+    </property>
+           <property name="externalAttributesProvider">
+    		<list value-type="fr.paris.lutece.plugins.elasticdata.business.IDataSourceExternalAttributesProvider">
+    			<ref bean="elasticdatasearch-unittree.unitTreeExternalProvider"/>
+    		</list>
+            </property>
+       </bean>
+
+</beans>
